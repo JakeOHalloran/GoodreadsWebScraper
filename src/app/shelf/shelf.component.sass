@@ -1,0 +1,36 @@
+$primaryTextColor: #333
+$secondaryTextColor: #181818
+
+.container-fluid 
+    padding: 0px
+
+// fix the Bootstrap 3 "height problem" occurs because the columns use float:left. 
+.row.display-flex 
+  display: flex
+  flex-wrap: wrap
+
+#bookWrapper 
+    padding: 25px
+    padding-left: 50px
+    padding-right: 50px
+
+#bookTitle
+    font-family: "Merriweather", "Georgia", serif
+    font-size: 28px
+    color: $primaryTextColor
+    font-weight: bold
+
+#description
+    font-size: 17px
+    color: $secondaryTextColor
+
+#cover
+    box-shadow: #ddd 0px 8px 10px
+    width: 50%
+    height: auto
+    display: inline-block
+    vertical-align: top
+
+#bookInformation
+    display: inline-block
+    width: 50%
