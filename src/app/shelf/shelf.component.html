@@ -1,14 +1,13 @@
 
-<app-book [book]="selectedBook"></app-book>
-
 <div class="container-fluid">
   <div class="row display-flex">
-    <div class="col-lg-4 col-md-4 col-sm-6" id="bookWrapper" *ngFor="let book of books" [class.selected]="book === selectedBook" (click)="viewBook(book)" routerLink="/book/{{book.id}}">
+    <div class="col-lg-4 col-md-4 col-sm-6" id="bookWrapper" *ngFor="let book of books">
       <img id="cover" src="{{book.coverURL}}" alt="">
       <div id="bookInformation">
         <div id="bookTitle">{{book.title}}</div>
         <div id="description">{{book.partialDescription}}</div>
       </div>
+      <input type="button" value="VIEW BOOK" id="viewBookButton" (click)="viewBook(book.id)">
     </div>
   </div>
 </div>

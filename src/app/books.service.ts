@@ -12,9 +12,4 @@ export class BooksService {
   getBooks(): Book[] {
     return BOOKS;
   }
-
-  //getHeroes(): Observable<Hero[]> {
-    //return of(HEROES);
-  //}
-
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Book } from '../book';
 import { BooksService } from '../books.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shelf',
@@ -10,29 +11,19 @@ import { BooksService } from '../books.service';
 export class ShelfComponent implements OnInit {
 
   books: Book[] = this.booksService.getBooks();
-  selectedBook: Book | undefined;
 
-  constructor(private booksService: BooksService) {
+  constructor(private booksService: BooksService, private router: Router) {
     this.getBooks();
   }
 
   ngOnInit() {
   }
 
-  //onSelect(hero: Hero): void {
-    //this.selectedHero = hero;
-    //this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
-  //}
-
   getBooks(): void {
     this.books = this.booksService.getBooks();
-
-    //var firstLine = this.books[0].description.split('.')[0];
-    //console.log(firstLine);
   }
 
-  viewBook(book: Book): void {
-    this.selectedBook = book;
-    
+  viewBook(id: number): void {
+    this.router.navigate(['/book/', id]);
   }
 }
