@@ -26,10 +26,13 @@ export class ShelfComponent implements OnInit {
 
   getBooks(): void {
     this.books = this.booksService.getBooks();
+
+    //var firstLine = this.books[0].description.split('.')[0];
+    //console.log(firstLine);
   }
 
-  onSelect(book: Book): void {
-    console.log(book);
+  viewBook(book: Book): void {
     this.selectedBook = book;
+    
   }
 }

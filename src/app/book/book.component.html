@@ -1,4 +1,13 @@
 <div *ngIf="book">
-  <h2>{{book.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{book.id}}</div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-6" id="bookWrapper">
+        <img id="cover" src="{{book.coverURL}}" alt="">
+        <div id="bookInformation">
+          <div id="bookTitle">{{book.title}}</div>
+          <div id="description">{{book.partialDescription}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
