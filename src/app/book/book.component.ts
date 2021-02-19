@@ -13,15 +13,13 @@ import { BooksService } from '../books.service';
 })
 export class BookComponent implements OnInit {
 
-  @Input() book: Book | undefined;
-
   constructor(private route: ActivatedRoute, private booksService: BooksService, private location: Location) { }
 
   ngOnInit(): void {
-    this.getBook();
+    this.getBookID();
   }
   
-  getBook(): void {
+  getBookID(): void {
     const id = +this.route.snapshot.paramMap.get('id')!;
   }
 

@@ -9,7 +9,7 @@ export class BooksService {
 
   constructor() { }
 
-  getBooks(): Book[] {
+  getBooks(authorPageURL: string): Book[] {
     return BOOKS;
   }
 }
