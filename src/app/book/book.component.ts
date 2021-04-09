@@ -19,10 +19,12 @@ export class BookComponent implements OnInit {
     this.getBookID();
   }
   
+  // which book are we displaying?
   getBookID(): void {
     const id = +this.route.snapshot.paramMap.get('id')!;
   }
 
+  // return to shelf
   goBack(): void {
     this.location.back();
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Book } from '../book';
 import { BooksService } from '../books.service';
 import { Router } from '@angular/router';
@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class ShelfComponent implements OnInit {
 
-  books: Book[] | undefined;
-  authorPageLink: string = "https://www.goodreads.com/author/show/16866170.Brian_Quirke";
+  books: Book[] = [];
+  authorPageLink: string = "https://www.goodreads.com/author/show/1439.Malcolm_Gladwell?from_search=true&from_srp=true";
 
   constructor(private booksService: BooksService, private router: Router) {
     
@@ -22,7 +22,12 @@ export class ShelfComponent implements OnInit {
   }
 
   getBooks(): void {
-    this.books = this.booksService.getBooks(this.authorPageLink);
+    this.booksService.getBooks(this.authorPageLink).subscribe( returnedBooks => {
+      this.books = returnedBooks;
+    }, 
+    err => {
+      console.log("error: " + err);
+    });
   }
 
   viewBook(id: number): void {
