@@ -30,7 +30,7 @@
     // what does the client want?
     switch ($received["request"]) {
       case "getLatestBooks":
-        $response = $goodreads->getBooks($received["authorPageURL"]);
+        $response = $goodreads->getBooks($received["authorPageURL"], $received["limit"]);
       break;
 
       /*case "getBooks":

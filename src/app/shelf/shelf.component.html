@@ -1,7 +1,7 @@
 
 <div class="container-fluid">
   <h1 id="pageTitle">Search Books By Author</h1>
-  <p id="pageDescription">Simply paste a link to a goodreads author page and hit the search button. The authors work will appear below, in order of popularity.
+  <p id="pageDescription">Simply paste a link to a goodreads author page and hit the search button. The authors top 50 most popular books will appear below, in order of popularity.
     Click on a book to see its description, rating and reviews.
   </p>
 
@@ -9,6 +9,8 @@
     <input id="authorInput" [(ngModel)]="authorPageLink"/>
     <input type="button" value="SEARCH BOOKS" id="getBooksButton" (click)="getBooks()">
   </div>
+
+  <div *ngIf="loading" class="loader"></div>
 
   <div class="row display-flex">
     <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let book of books">

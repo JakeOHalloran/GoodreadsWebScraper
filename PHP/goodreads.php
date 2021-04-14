@@ -8,12 +8,11 @@
       $this->html = new simple_html_dom();
     }
 
-    public function getBooks($authorPageURL) {
-      return $this->getBookList($authorPageURL); // the authors goodreads page url
+    public function getBooks($authorPageURL, $limit) {
+      return $this->getBookList($authorPageURL, $limit); // the authors goodreads page url
     }
 
-    // Get the amazon page link for a book on goodreads
-    private function getBookList($authorPageURL) {
+    private function getBookList($authorPageURL, $limit) {
       // some author page urls have noise on the end (after '?' in the url); if it exists on this url, remove it
       $returned = explode("?", $authorPageURL, 2);
       $authorPageURL = $returned[0];
@@ -37,7 +36,7 @@
         if(($uniqueAuthorIDstartingPos = strpos($authorPageURL, 'show/')) !== false)
         {
           $uniqueAuthorID = substr($authorPageURL, $uniqueAuthorIDstartingPos + 5);
-          $bookListURL = "https://www.goodreads.com/author/list/".$uniqueAuthorID."?page=1";
+          $bookListURL = "https://www.goodreads.com/author/list/".$uniqueAuthorID."?page=1&per_page=".$limit;
 
           //error_log("hksdfj ".$bookListURL);
         }
@@ -57,18 +56,13 @@
           $bookPageLink = "https://www.goodreads.com".$bookDiv->find('a[title]', 0)->href;
           $bookImageLink = $bookDiv->find('img.bookCover', 0)->src;
 
-          //error_log("Title = ".$bookTitle);
-          //error_log("Link = ".$bookPageLink);
-
-          //https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1582813510i/51829218._SX50_.jpg
-
           if(($imageSizeStartingPos = strpos($bookImageLink, '._')) !== false)
           {
-            error_log("image = ".$bookImageLink);
+            //error_log("image = ".$bookImageLink);
 
             $bookImageWidth = substr($bookImageLink, $imageSizeStartingPos);
 
-            error_log("image width string = ".$bookImageWidth);
+            //error_log("image width string = ".$bookImageWidth);
 
             $bookImageLink = str_replace($bookImageWidth, "._SX500_.jpg", $bookImageLink);
           }
@@ -77,26 +71,6 @@
           $bookTitles[] = [ 'title' => $bookTitle ];
           $bookCovers[] = [ 'coverURL' => $bookImageLink ];
         }
-
-        /*$count = 1;
-
-        foreach ($this->html->find('img.a-thumbnail-left') as $image) { // get the most popular books covers
-          if ($count > 2) { break; }
-
-          // The image for it isnt great, so we get the img src
-          // We get the img name from the img src, send it to the front end, for it to use to get better img from amazon IMG api
-          if(($imgNameStarts = strpos($image->src, 'I/')) !== false)
-          {
-            $new_str = substr($image->src, $imgNameStarts + 2);
-
-            $returned = explode(".", $new_str, 2);
-            $imgName = $returned[0];
-
-            $bookCovers[] = [ 'cover' => $imgName ];
-          }
-
-          $count++;
-        }*/
 
         // save the url, book title and covers in same array to return
         for($i = 0; $i < sizeof($bookTitles); $i++) {
