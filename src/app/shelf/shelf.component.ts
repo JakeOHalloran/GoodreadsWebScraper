@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class ShelfComponent implements OnInit {
 
   books: Book[] = [];
-  authorPageLink: string = "https://www.goodreads.com/author/show/1439.Malcolm_Gladwell?from_search=true&from_srp=true";
+  authorPageLink: string = "https://www.goodreads.com/author/show/1439.Malcolm_Gladwell";
 
   constructor(private booksService: BooksService, private router: Router) {
     

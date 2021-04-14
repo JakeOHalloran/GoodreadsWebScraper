@@ -57,9 +57,21 @@
           $bookPageLink = "https://www.goodreads.com".$bookDiv->find('a[title]', 0)->href;
           $bookImageLink = $bookDiv->find('img.bookCover', 0)->src;
 
-          error_log("Title = ".$bookTitle);
-          error_log("Link = ".$bookPageLink);
-          error_log("image = ".$bookImageLink);
+          //error_log("Title = ".$bookTitle);
+          //error_log("Link = ".$bookPageLink);
+
+          //https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1582813510i/51829218._SX50_.jpg
+
+          if(($imageSizeStartingPos = strpos($bookImageLink, '._')) !== false)
+          {
+            error_log("image = ".$bookImageLink);
+
+            $bookImageWidth = substr($bookImageLink, $imageSizeStartingPos);
+
+            error_log("image width string = ".$bookImageWidth);
+
+            $bookImageLink = str_replace($bookImageWidth, "._SX500_.jpg", $bookImageLink);
+          }
 
           $bookPageURLs[] = [ 'bookPageURL' => $bookPageLink ];
           $bookTitles[] = [ 'title' => $bookTitle ];
