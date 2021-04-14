@@ -14,6 +14,8 @@ export class BooksService {
 
   // Get the authors book data from the goodreads web scraper
   getBooks(authorPageURL: string): Observable<Book[]> {
-      return this.http.post<Book[]>("http://localhost/Projects/Angular Study/GoodreadsScraperProject/goodreads-web-scraper/PHP/index.php", { request: "getBooks" });
+      return this.http.post<Book[]>("http://localhost/Projects/Angular Study/GoodreadsScraperProject/goodreads-web-scraper/PHP/index.php", { 
+        request: "getLatestBooks",
+        authorPageURL: authorPageURL });
   }
 }
