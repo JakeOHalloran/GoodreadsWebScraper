@@ -13,7 +13,7 @@ export class ShelfComponent implements OnInit {
   books: Book[] = [];
   loading = false;
   authorPageLink: string = "https://www.goodreads.com/author/show/1439.Malcolm_Gladwell";
-  limit = 50;
+  limit: number = 50;
 
   constructor(private booksService: BooksService, private router: Router) {
     
@@ -32,13 +32,14 @@ export class ShelfComponent implements OnInit {
     this.booksService.getBooks(this.authorPageLink, this.limit).subscribe( returnedBooks => {
       this.loading = false;
       this.books = returnedBooks;
+      console.log(this.books);
     }, 
     err => {
       console.log("error: " + err);
     });
   }
 
-  viewBook(id: number): void {
-    this.router.navigate(['/book/', id]);
+  viewBook(bookPageURL: string): void {
+    this.router.navigate(['/book/', bookPageURL]);
   }
 }

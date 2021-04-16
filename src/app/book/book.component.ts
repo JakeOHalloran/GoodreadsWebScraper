@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Book } from '../book';
+import { BooksService } from '../books.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
-import { BooksService } from '../books.service';
 
 @Component({
   selector: 'app-book',
@@ -13,15 +12,28 @@ import { BooksService } from '../books.service';
 })
 export class BookComponent implements OnInit {
 
+  book!: Book;
+  loading = false;
+
   constructor(private route: ActivatedRoute, private booksService: BooksService, private location: Location) { }
 
   ngOnInit(): void {
-    this.getBookID();
+    this.loading = true;
+
+    this.booksService.getBook(this.getBookPageURL()).subscribe( returnedBook => {
+      this.loading = false;
+      this.book = returnedBook;
+      console.log(this.book);
+    }, 
+    err => {
+      console.log("error: " + err);
+    });
   }
   
   // which book are we displaying?
-  getBookID(): void {
-    const id = +this.route.snapshot.paramMap.get('id')!;
+  getBookPageURL(): string {
+    const bookPageURL = this.route.snapshot.paramMap.get('bookPageURL')!;
+    return bookPageURL;
   }
 
   // return to shelf

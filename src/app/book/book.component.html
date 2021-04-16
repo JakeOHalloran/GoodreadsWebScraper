@@ -1,3 +1,9 @@
 
-
-
+<div *ngIf="book">
+    <img id="cover" src="{{book.coverURL}}" alt="">
+    <div>{{book.title}}</div>
+    <div>{{book.rating}}</div>
+    <div>{{book.ratings}}</div>
+    <div>{{book.reviews}}</div>
+    <div [innerHTML]="book.description"></div>
+</div>

@@ -8,8 +8,14 @@
       $this->html = new simple_html_dom();
     }
 
+    // get an array of books by an author
     public function getBooks($authorPageURL, $limit) {
-      return $this->getBookList($authorPageURL, $limit); // the authors goodreads page url
+      return $this->getBookList($authorPageURL, $limit);
+    }
+
+    // get a single book by an author
+    public function getBook($bookPageURL) {
+      return $this->getBookInfo($bookPageURL);
     }
 
     private function getBookList($authorPageURL, $limit) {
@@ -17,28 +23,23 @@
       $returned = explode("?", $authorPageURL, 2);
       $authorPageURL = $returned[0];
       
+      // get the authors books list page
       $webpage = $this->cURL($authorPageURL);
       $this->html->load($webpage);
       
       $bookListURL = "";
-
       $bookPageURLs = []; // each book on author page contains a link to its own page (which has the book description, rating, reviews)
       $bookCovers = [];
       $bookTitles = [];
       $books = [];
 
-      //error_log("clean author page: ".$authorPageURL);
-
       if(empty($this->html)) {
         error_log("Couldnt grab the html page in getBookList()");
       } else {
         // get the authors books list url from the author page url
-        if(($uniqueAuthorIDstartingPos = strpos($authorPageURL, 'show/')) !== false)
-        {
+        if(($uniqueAuthorIDstartingPos = strpos($authorPageURL, 'show/')) !== false) {
           $uniqueAuthorID = substr($authorPageURL, $uniqueAuthorIDstartingPos + 5);
           $bookListURL = "https://www.goodreads.com/author/list/".$uniqueAuthorID."?page=1&per_page=".$limit;
-
-          //error_log("hksdfj ".$bookListURL);
         }
 
         $this->html->clear();
@@ -56,14 +57,9 @@
           $bookPageLink = "https://www.goodreads.com".$bookDiv->find('a[title]', 0)->href;
           $bookImageLink = $bookDiv->find('img.bookCover', 0)->src;
 
-          if(($imageSizeStartingPos = strpos($bookImageLink, '._')) !== false)
-          {
-            //error_log("image = ".$bookImageLink);
-
+          // the book image url will be for a small image, change the url to request a larger one
+          if(($imageSizeStartingPos = strpos($bookImageLink, '._')) !== false) {
             $bookImageWidth = substr($bookImageLink, $imageSizeStartingPos);
-
-            //error_log("image width string = ".$bookImageWidth);
-
             $bookImageLink = str_replace($bookImageWidth, "._SX500_.jpg", $bookImageLink);
           }
 
@@ -81,6 +77,60 @@
         unset($this->html);
   
         return $books;
+      }
+    }
+
+    private function getBookInfo($bookPageURL) {
+      $webpage = $this->cURL($bookPageURL);
+      $this->html->load($webpage);
+      
+      $bookTitle = "";
+      $bookDescription = "";
+      $bookRating = "";
+      $bookRatings = "";
+      $bookReview = "";
+      $coverURL = "";
+      $booksInfo = [];
+      $count = 1;
+
+      // we have the book list page url now so load it
+      $webpage = $this->cURL($bookPageURL);
+      $this->html->load($webpage);
+
+      if(empty($this->html)) {
+        error_log("Couldnt grab the html page in getBookInfo()");
+      } else {
+        $bookTitle = $this->html->find('#bookTitle', 0)->innertext;
+        $bookDescription = $this->html->find('#description', 0)->find("span[display=none]", 0);
+        
+        foreach ($this->html->find('#description span') as $bookDescriptionDiv) { // page will have 2 descriptions, we want the second one
+          if($count == 2) {
+            $bookDescription = $bookDescriptionDiv->innertext;
+          }
+
+          $count++;
+        }
+
+        $bookImageLink = $this->html->find('div.editionCover img', 0)->src;
+        $bookRatings = $this->html->find('meta[itemprop=ratingCount]', 0)->content;
+        $bookReviews = $this->html->find('meta[itemprop=reviewCount]', 0)->content;
+        $bookRating = $this->html->find('span[itemprop=ratingValue]', 0)->innertext;
+
+        // the book image url will be for a small image, change the url to request a larger one
+        /*if(($imageSizeStartingPos = strpos($bookImageLink, '._')) !== false) {
+          $bookImageWidth = substr($bookImageLink, $imageSizeStartingPos);
+          $bookImageLink = str_replace($bookImageWidth, "._SX500_.jpg", $bookImageLink);
+        }*/
+
+        // put all the book info into one array
+        $book = [ 'title' => $bookTitle, 'description' => $bookDescription, 
+        'coverURL' => $bookImageLink, 'ratings' => $bookRatings, 
+        'reviews' => $bookReviews,'rating' => $bookRating ];
+
+        $this->html->clear();
+        unset($this->html);
+  
+        return $book;
       }
     }
 

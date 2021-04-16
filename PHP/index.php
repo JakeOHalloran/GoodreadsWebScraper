@@ -29,20 +29,12 @@
 
     // what does the client want?
     switch ($received["request"]) {
-      case "getLatestBooks":
+      case "getBooks":
         $response = $goodreads->getBooks($received["authorPageURL"], $received["limit"]);
       break;
-
-      /*case "getBooks":
-        $books[] = [ 'id' => '1', 'title' => 'testTitle1', 'partialDescription' => 'testPartialDescription1', 'description' => 'testDescription1', 'coverURL' => 'testCover1', 'rating' => '1'];
-        $books[] = [ 'id' => '2', 'title' => 'testTitle2', 'partialDescription' => 'testPartialDescription2', 'description' => 'testDescription2', 'coverURL' => 'testCover2', 'rating' => '2'];
-        $books[] = [ 'id' => '3', 'title' => 'testTitle3', 'partialDescription' => 'testPartialDescription3', 'description' => 'testDescription3', 'coverURL' => 'testCover3', 'rating' => '3'];
-        $books[] = [ 'id' => '4', 'title' => 'testTitle4', 'partialDescription' => 'testPartialDescription4', 'description' => 'testDescription4', 'coverURL' => 'testCover4', 'rating' => '4'];
-        $books[] = [ 'id' => '5', 'title' => 'testTitle5', 'partialDescription' => 'testPartialDescription5', 'description' => 'testDescription5', 'coverURL' => 'testCover5', 'rating' => '5'];
-        $books[] = [ 'id' => '6', 'title' => 'testTitle6', 'partialDescription' => 'testPartialDescription6', 'description' => 'testDescription6', 'coverURL' => 'testCover6', 'rating' => '6'];
-
-        $response = $books;
-        error_log("No suitable request received3");*/
+      case "getBook":
+        $response = $goodreads->getBook($received["bookPageURL"]);
+      break;
     }
 
     echo json_encode($response); // send back response
