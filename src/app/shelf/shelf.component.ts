@@ -15,12 +15,10 @@ export class ShelfComponent implements OnInit {
   authorPageLink: string = "https://www.goodreads.com/author/show/1439.Malcolm_Gladwell";
   limit: number = 50;
 
-  constructor(private booksService: BooksService, private router: Router) {
-    
-  }
+  constructor(private booksService: BooksService, private router: Router) { }
 
   ngOnInit() {
-    //this.getBooks();
+    this.getBooks();
   }
 
   getBooks(): void {
