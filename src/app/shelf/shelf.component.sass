@@ -17,36 +17,36 @@ $secondaryColor: #181818
 
 #pageDescription
     color: $secondaryColor
-    width: 500px
+    max-width: 500px
+    width: 90%
     margin: 0 auto
     text-align: center
     font-size: 19px
     margin-bottom: 50px
 
-#searchWrapper
-    width: 800px
-    margin: 0 auto
-    margin-bottom: 80px
+#searchWrapper 
+    width: 100%
 
 #authorInput
-    width: 650px
+    display: block
+    max-width: 650px
+    width: 90%
     padding: 10px
-    display: inline-block
     border: 1px solid black
     margin: 0 auto
+    margin-bottom: 40px
 
 #getBooksButton
+    display: block
     width: 150px
     text-align: center
-    display: inline-block
     border: 1px solid black
     padding: 10px
-    border-left: none
     color: white
     font-weight: 600
     background-color: $primaryColor
-
-
+    margin: 0 auto
+    margin-bottom: 80px
 
 .loader
   border: 10px solid #f3f3f3
@@ -65,7 +65,7 @@ $secondaryColor: #181818
 
 
 #bookWrapper
-    width: auto
+    width: 100%
     height: auto
     padding: 25px
     padding-left: 50px
@@ -92,15 +92,17 @@ $secondaryColor: #181818
     border: 1px solid black
 
 
+@media (max-width: 768px)
+    #bookWrapper
+        width: 90%
+        margin: 0 auto
+        padding-left: 0px
+        padding-right: 0px
 
-#viewBookButton
-    margin: 0 auto
-    display: block
-    margin-top: 20px
-    width: 150px
-    padding: 10px 5px 10px 5px
-    text-align: center
-    color: white
-    font-weight: 600
-    background-color: $primaryColor
-    border: none
+    #cover
+        width: 300px
+        margin: 0 auto
+
+@media (max-width: 500px)
+    #cover
+        width: 100%

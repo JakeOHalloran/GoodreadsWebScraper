@@ -12,7 +12,7 @@ export class ShelfComponent implements OnInit {
 
   books: Book[] = [];
   loading = false;
-  authorPageLink: string = "https://www.goodreads.com/author/show/1439.Malcolm_Gladwell";
+  authorPageLink: string = "https://www.goodreads.com/author/show/30702.Ian_Kershaw";
   limit: number = 50;
 
   constructor(private booksService: BooksService, private router: Router) { }

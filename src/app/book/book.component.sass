@@ -13,9 +13,8 @@ $secondaryTextColor: #181818
     color: $primaryTextColor
     font-weight: bold
 
-#description
-    font-size: 17px
-    color: $secondaryTextColor
+#bookDescription
+    font-size: 14px
 
 #cover
     box-shadow: #ddd 0px 8px 10px
@@ -54,3 +53,14 @@ $secondaryTextColor: #181818
     transform: rotate(0deg)
   100% 
     transform: rotate(360deg)
+
+@media (max-width: 992px)
+    #cover
+        width: 300px
+        margin-bottom: 30px
+
+    #bookDescription
+        margin-bottom: 50px
+
+    #content 
+        margin-top: 30px

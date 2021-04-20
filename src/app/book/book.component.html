@@ -3,17 +3,17 @@
   <div class="row">
     <div *ngIf="loading" class="loader"></div>
     <div *ngIf="book" id="content">
-      <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="col-lg-4 col-md-4 col-sm-12 text-center">
         <img id="cover" src="{{book.coverURL}}" alt="">
       </div>
-      <div class="col-lg-8 col-md-6 col-sm-12">
+      <div class="col-lg-8 col-md-8 col-sm-12">
         <div id="bookTitle">{{book.title}}</div>
         <div id="bookValues">
           <div id="rating">{{book.rating}} / 5.00 Rating</div>
           <div id="ratings">{{book.ratings}}  Ratings</div>
           <div id="reviews">{{book.reviews}}  Reviews</div>
         </div>
-        <div [innerHTML]="book.description"></div>
+        <div [innerHTML]="book.description" id="bookDescription"></div>
       </div>
     </div>
   </div>
